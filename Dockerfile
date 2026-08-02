@@ -8,7 +8,7 @@ FROM node:22-slim AS web
 ARG LOVI_WEB_REPO=https://github.com/dvasincom-sketch/lovi-web.git
 ARG LOVI_WEB_REF=main
 ARG VITE_API_BASE=""
-RUN apt-get update && apt-get install -y --no-install-recommends git && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends git ca-certificates && rm -rf /var/lib/apt/lists/*
 WORKDIR /build
 RUN git clone --depth 1 --branch ${LOVI_WEB_REF} ${LOVI_WEB_REPO} .
 RUN npm install --no-audit --no-fund
@@ -20,7 +20,7 @@ RUN npm run build
 FROM python:3.11-slim AS app
 ARG INSALON_REPO=https://github.com/dvasincom-sketch/insalon.git
 ARG INSALON_REF=main
-RUN apt-get update && apt-get install -y --no-install-recommends git && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends git ca-certificates && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 RUN git clone --depth 1 --branch ${INSALON_REF} ${INSALON_REPO} .
 RUN pip install --no-cache-dir -r requirements.txt
