@@ -1,0 +1,16 @@
+# Локальная проверка единого образа. Нужен .env с реальными секретами (см. .env.example).
+services:
+  app:
+    build:
+      context: .
+      args:
+        LOVI_WEB_REF: main
+        INSALON_REF: main
+        VITE_API_BASE: ""      # тот же домен -> относительные запросы
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      WEB_DIR: /app/web
+      PORT: "8000"
